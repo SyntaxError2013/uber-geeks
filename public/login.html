@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -51,8 +51,6 @@
       }
 
     </style>
-    <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
   </head>
 
   <body>
@@ -63,19 +61,19 @@
         <span id="class">DogByte</span>
       </div>
 
-      <form class="form-signin" style="float:left">
+      <form action="/login" method="post" class="form-signin" style="float:left">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="input-block-level" placeholder="Email address">
-        <input type="password" class="input-block-level" placeholder="Password">
+        <input name="username" type="text" class="input-block-level" placeholder="Username">
+        <input name="password" type="password" class="input-block-level" placeholder="Password">
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>
       </form>
 
-      <form class="form-signup" style="float:right">
+      <form action="/user" method="post" class="form-signup" style="float:right">
         <h2 class="form-signup-heading">Register Yourself</h2>
-        <input type="text" class="input-block-level" placeholder="Name">
-        <input type="text" class="input-block-level" placeholder="Email address">
-        <input type="password" class="input-block-level" placeholder="Password">
-        <input type="password" class="input-block-level" placeholder="Confirm Password">
+        <input name="username" type="text" class="input-block-level" placeholder="Username">
+        <input name="email" type="text" class="input-block-level" placeholder="Email address">
+        <input name="password" type="password" class="input-block-level" placeholder="Password">
+        <input name="cpassword" type="password" class="input-block-level" placeholder="Confirm Password">
         <button class="btn btn-large btn-primary" type="submit">Sign Up</button>
       </form>
 

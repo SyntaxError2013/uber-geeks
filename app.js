@@ -33,19 +33,33 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'Avada Kedavra'}));
+app.use(express.static(__dirname + '/public'));
 app.use(app.router);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  if(typeof req.session.uid === "undefined")
+  if (typeof req.session.uid === "undefined")
     res.redirect('/login');
   else
     res.send('Hello World!');
 });
 
-app.get('/login', function(req, res) {
-  res.sendfile(__dirname + '/public/login.html');
+app.get('/bootstrap/:file', function (req, res) {
+  console.log(req.params.file);
+  res.sendfile(__dirname + '/public/bootstrap' + req.params.file);
+});
+
+app.get('/login', function (req, res) {
+  if (typeof req.session.uid === "undefined")
+    res.sendfile(__dirname + '/public/login.html');
+  else
+    res.redirect('/');
+});
+
+app.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.redirect('/login');
 });
 
 app.post('/login', function (req, res) {
@@ -55,7 +69,7 @@ app.post('/login', function (req, res) {
     if (err) {
       res.send(err);
     }
-    else if (rows[0]) {
+    else if (rows[0] && rows[0].password == password) {
       req.session.uid = rows[0].uid;
       res.redirect('/');
     }
@@ -65,12 +79,13 @@ app.post('/login', function (req, res) {
   });
 });
 
-app.post('/users', function (req, res) {
+app.post('/user', function (req, res) {
+  console.log (req.body);
   if (req.body.password != req.body.cpassword) {
     res.send("Passwords do not match!");
   }
   else {
-    connection.query("INSERT INTO users(username, email, password) VALUES('" + req.body.username + "', '" + req.body.email + "', '" + req.body.password + "'", function (err, rows) {
+    connection.query("INSERT INTO users(username, email, password) VALUES('" + req.body.username + "', '" + req.body.email + "', '" + req.body.password + "')", function (err, rows) {
       if (err) {
         res.send(err);
       }
@@ -133,7 +148,7 @@ app.post('/macs', function (req, res) {
       res.end();
     }
     else {
-      connection.query("INSERT INTO identities(uid, mac, type) VALUES ('" + 0 + "', '" + mac + "', '" + type + "'", function (err, rows) {
+      connection.query("INSERT INTO identities(uid, mac, type) VALUES ('" + 0 + "', '" + mac + "', '" + type + "')", function (err, rows) {
         if (err) {
           res.send(err);
         }
