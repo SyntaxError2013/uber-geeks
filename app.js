@@ -3,6 +3,8 @@ var express = require('express');
 var websocket = require('socket.io');
 var http = require('http');
 var ejs = require('ejs');
+var mysql = require('mysql');
+var config = require('./config/config.js');
 
 // Make instances of express and websockets
 var app = express();
@@ -21,8 +23,16 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-  res.send('Hello World!');
+  if(typeof req.session.uid === "undefined")
+    res.redirect('/login');
+  else
+    res.send('Hello World!');
 });
+
+app.get('/login', function(req, res) {
+  res.sendfile(__dirname + '/public/login.html');
+});
+
 
 // Start the server
 server.listen(3000);
