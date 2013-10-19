@@ -28,7 +28,7 @@ connection.connect(function (err) {
 });
 
 var getOnlineUsers = function (cb) {
-  connection.query("SELECT uid FROM identities WHERE last_seen < '" + new Date().getTime() + 3600000 + "'", function (err, rows) {
+  connection.query("SELECT DISTINCT uid FROM identities WHERE last_seen < '" + new Date().getTime() + 3600000 + "'", function (err, rows) {
     if (err) {
       console.log(err);
     }
@@ -232,7 +232,7 @@ app.get('/user/:id', function (req, res) {
         res.send(err);
       }
       else if (rows[0]) {
-        var user_details = rows[0];
+        var user = rows[0];
         connection.query("SELECT `files`.*, `identities`.* FROM `files`, `identities` WHERE `files`.uid = '" + id + "' AND `identities`.`uid` = '" + id + "'", function (err, rows) {
           if (err) {
             res.send(err);
@@ -240,14 +240,14 @@ app.get('/user/:id', function (req, res) {
           else {
             if (id == req.session.uid) {
               res.render('user', {
-                details: user_details,
+                user: user,
                 files: rows,
                 self: true
               });
             }
             else {
               res.render('user', {
-                details: user_details,
+                user: user,
                 files: rows,
                 self: false
               });

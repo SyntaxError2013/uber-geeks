@@ -41,39 +41,35 @@
       </div>
       <div class="span12 offset3 correct-width">
         <div class="space-extra"></div>
-        <h1 class="offset1">Online users <%= online %></h1>
+        <h1 class="offset1">Online users</h1>
+        <% for(var i=0; i<online.length; i++) { %>
+            <% if(i%4==0) { %>
+              <div class="space-extra"></div>
+              <div class="row">
+            <% } %>
+            <a href="/user/<%= online[i].uid %>">
+              <div class="span2 offset1">
+                <img src="/img/uploads/<%= online[i].uid %>.jpg" class="img-polaroid">
+                <h5 class="other-username"><%= online[i].username %></h5>
+              </div>
+            </a>
+            <% if(i%4==3) { %>
+              </div>
+            <% } %>
+        <% } %>
+        <% if((online.length-1)%3!=0){ %>
+          </div>
+          <% } %>
+          <div class="space-extra"></div>
+          <div class="space-extra"></div>
+          <div class="space-extra"></div>
+          <div class="space-extra"></div>
+          <div class="space-extra"></div>
+          <div class="space-extra"></div>
         <div class="space-extra"></div>
         <div class="row">
-          <div class="span2 offset1">
-            <img src="img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 1<h5>
-          </div>
-          <div class="span2 offset1">
-            <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 2<h5>
-          </div>
-          <div class="span2 offset1">
-            <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 3<h5>
-          </div>
-          <div class="span2 offset1">
-            <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 3<h5>
-          </div>
-        </div>
-        <div class="space-extra"></div>
-        <div class="row">
-          <div class="span2 offset1">
-            <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 5<h5>
-          </div>
-          <div class="span2 offset1">
-            <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 6<h5>
-          </div>
-          <div class="span2 offset1">
-            <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 7<h5>
+          <div class="span6 offset4">
+            <p>Not listed? Add your mac address <a href="/macs">here!</a><p>
           </div>
         </div>
       </div>

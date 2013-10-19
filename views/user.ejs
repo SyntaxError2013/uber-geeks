@@ -14,7 +14,7 @@
     <script src="/js/delivery.js"></script>
 	</head>
 	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -30,19 +30,13 @@
           </div>
         </div>
       </div>
-		</div>
-    <div class="container">
-      <div class="span3 left sidebar-custom">
-        <br><br>
-        <img src="/img/profile.jpg" class="img-circle" style="margin-left:45px;">
+    </div>
+    <div class="row">
+      <div class="sidebar-custom">
+        <img src="/img/uploads/<%= user.uid %>.jpg" class="sidebar-image circle">
         <div class="sidebar-col">
-          <h3 class="sidebar-text">Full Name</h3>
-          <h5 class="sidebar-text">Email</h5>
-          <h5 class="sidebar-text">Mac</h5>
-          <p class="sidebar-text">
-            Something about the user.
-            Like I am a web developer with interest in this and that
-          </p>
+          <h3 class="sidebar-text"><%= user.username %></h3>
+          <h5 class="sidebar-text"><%= user.email %></h5>
         </div>
       </div>
 
@@ -81,9 +75,7 @@
             </tr>
           </tbody>
         </table>
-
       </div>
-
     </div>
 	</body>
 </html>
