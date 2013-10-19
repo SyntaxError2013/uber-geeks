@@ -44,18 +44,18 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td>
+              <th>
                 MAC Address List
-              </td>
-              <td>
+              </th>
+              <th>
                 Connection-Type
-              </td>
+              </th>
             </tr>
           </thead>
           <tbody>
             <% for (var i=0; i<macs.length; i++) { %>
-              <tr><th><%= macs[i].mac %></th>
-              <th><%= macs[i].type %></th></tr>
+              <tr><td><%= macs[i].mac %></td>
+              <td><%= macs[i].type %></td></tr>
             <% } %>
           </tbody>
         </table>
