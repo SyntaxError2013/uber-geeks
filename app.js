@@ -127,7 +127,7 @@ app.get('/macs', function (req, res) {
       res.send(err);
     }
     else if (rows[0]) {
-      res.render({
+      res.render('macs', {
         rows: rows
       });
     }
@@ -166,13 +166,13 @@ app.get('/user/:id', function (req, res) {
   }
   else {
     var id = req.params.id;
-    connection.query("SELECT * FROM users WHERE uid = '" + id + '"', function (err, rows) {
+    connection.query("SELECT * FROM users WHERE uid = '" + id + "'", function (err, rows) {
       if (err) {
         res.send(err);
       }
       else if (rows[0]) {
         var user_details = rows[0];
-        connection.query("SELECT * FROM files, identities WHERE uid = '" + id + '"', function (err, rows) {
+        connection.query("SELECT `files`.*, `identities`.* FROM `files`, `identities` WHERE `files`.uid = '" + id + "' AND `identities`.`uid` = '" + id + "'", function (err, rows) {
           if (err) {
             res.send(err);
           }
