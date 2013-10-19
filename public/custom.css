@@ -7,3 +7,26 @@
 {
 	color: #FFF !important;
 }
+.container
+{
+	width: 1300px;
+}
+.sidebar-col
+{
+	margin: 40px 10px 20px 10px;
+
+}
+.sidebar-custom
+{
+	margin: -1px;
+	padding: 0px;
+	background-color: #333;
+	position: fixed;
+	height: 1000px;	
+	color: white;
+}
+.sidebar-text
+{
+	font-family: "Alegreya", Georgia, Cambria, "Times New Roman", Times, serif;
+	text-align: justify;
+}
