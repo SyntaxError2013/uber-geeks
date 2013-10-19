@@ -27,6 +27,20 @@ connection.connect(function (err) {
   }
 });
 
+var getUserDetails = function (uid, cb) {
+  connection.query("SELECT * FROM users WHERE uid = '" + uid + "'", function (err, rows) {
+    if (err) {
+      cb(err);
+    }
+    else if (rows[0]) {
+      cb(rows[0]);
+    }
+    else {
+      cb(rows);
+    }
+  })
+}
+
 // Config options
 app.set('port', process.env.PORT || 3000);
 app.use(express.favicon());
@@ -45,7 +59,10 @@ app.get('/', function (req, res) {
     res.redirect('/login');
   }
   else {
-    res.render('index', {
+    getUserDetails(req.session.uid, function(user) {
+      res.render('index', {
+        user: user
+      });
     });
   }
 });

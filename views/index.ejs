@@ -33,21 +33,15 @@
 		</div>
     <div class="row">
       <div class="sidebar-custom">
-        <img src="/img/profile.jpg" class="img-circle sidebar-image">
+        <img src="/img/uploads/<%= user.uid %>.jpg" class="sidebar-image circle">
         <div class="sidebar-col">
-          <h3 class="sidebar-text">Satyam Vijay</h3>
-          <h5 class="sidebar-text">satyam.vijay15@gmail.com</h5>
-          <h5 class="sidebar-text">01-23-45-67-89-AB</h5>
-          <br>
-          <p class="sidebar-text">
-            Something about the user.
-            Like I am a web developer with interest in this and that
-          </p>
+          <h3 class="sidebar-text"><%= user.username %></h3>
+          <h5 class="sidebar-text"><%= user.email %></h5>
         </div>
       </div>
       <div class="span12 offset3 correct-width">
         <div class="space-extra"></div>
-        <h1 class="offset1">Users</h1>
+        <h1 class="offset1">Online users</h1>
         <div class="space-extra"></div>
         <div class="row">
           <div class="span2 offset1">
@@ -64,7 +58,7 @@
           </div>
           <div class="span2 offset1">
             <img src="/img/profile.jpg" class="img-polaroid">
-            <h5 class="other-username">Login User 4<h5>
+            <h5 class="other-username">Login User 3<h5>
           </div>
         </div>
         <div class="space-extra"></div>

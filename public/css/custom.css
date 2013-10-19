@@ -7,6 +7,11 @@ body
 	float: left !important; 
 	color: #999999 !important;
 }
+.circle {
+	height: 180px;
+	width: 180px;
+	border-radius: 95px;
+}
 .brand-change:hover
 {
 	color: #FFF !important;
@@ -22,7 +27,7 @@ body
 }
 .sidebar-image
 {
-	margin: 40px 10px 0px 50px;
+	margin: 40px 10px 0px 40px;
 }
 .sidebar-custom
 {
