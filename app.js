@@ -172,20 +172,25 @@ app.get('/user/:id', function (req, res) {
       }
       else if (rows[0]) {
         var user_details = rows[0];
-        connection.query("SELECT * FROM files WHERE uid = '" + id + '"', function (err, rows) {
-          if (id == req.session.uid) {
-            res.render('user', {
-              details: user_details,
-              files: rows,
-              self: true
-            });
+        connection.query("SELECT * FROM files, identities WHERE uid = '" + id + '"', function (err, rows) {
+          if (err) {
+            res.send(err);
           }
           else {
-            res.render('user', {
-              details: user_details,
-              files: rows,
-              self: false
-            });
+            if (id == req.session.uid) {
+              res.render('user', {
+                details: user_details,
+                files: rows,
+                self: true
+              });
+            }
+            else {
+              res.render('user', {
+                details: user_details,
+                files: rows,
+                self: false
+              });
+            }
           }
         });
       }
