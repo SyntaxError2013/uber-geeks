@@ -50,11 +50,6 @@ app.get('/', function (req, res) {
   }
 });
 
-app.get('/bootstrap/:file', function (req, res) {
-  console.log(req.params.file);
-  res.sendfile(__dirname + '/public/bootstrap' + req.params.file);
-});
-
 app.get('/login', function (req, res) {
   if (typeof req.session.uid === "undefined")
     res.sendfile(__dirname + '/public/login.html');
@@ -136,11 +131,6 @@ app.get('/macs', function (req, res) {
       });
     }
   });
-});
-
-app.post('/temp', function (req, res) {
-  console.log(req.body.mac + '    ' + req.body.type);
-  res.end();
 });
 
 app.post('/macs', function (req, res) {
