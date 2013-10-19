@@ -1,0 +1,9 @@
+.brand-change
+{
+	float: left !important; 
+	color: #999999 !important;
+}
+.brand-change:hover
+{
+	color: #FFF !important;
+}
