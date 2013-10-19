@@ -1,0 +1,8 @@
+{
+  "name": "Dogbyte",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "2.x"
+  }
+}

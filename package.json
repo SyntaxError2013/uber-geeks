@@ -1,0 +1,13 @@
+{
+  "name": "Dogbyte",
+  "version": "0.0.1",
+  "description": "A simple application to transfer files over a local network",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*",
+    "ejs": "*"
+  }
+}
