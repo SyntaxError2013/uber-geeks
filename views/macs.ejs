@@ -1,18 +1,20 @@
 <html>
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
     <title>DogByte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A simple application for file transfer over intranet">
     <meta name="author" content="Uber Geeks">
 
-    <link href="../public/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="../public/docs.css" rel="stylesheet">
-    <link href="../public/custom.css" rel="stylesheet">
-
-	</head>
-	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Le styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/docs.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/delivery.js"></script>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -21,29 +23,22 @@
           <a class="brand-change brand" href="/">DogByte</a>
           <div class="pull-right nav-collapse collapse">
             <ul class="nav">
-              <li class="active">
-                <a href="/login">Login</a>
+              <li>
+                <a href="/logout">Logout</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-		</div>
-    <div class="container">
-      <div class="span3 left sidebar-custom">
-        <br><br>
-        <img src="../public/img/profile.jpg" class="img-circle" style="margin-left:45px;">
+    </div>
+    <div class="row">
+      <div class="sidebar-custom">
+        <img src="/img/uploads/<%= user.uid %>.jpg" class="sidebar-image circle">
         <div class="sidebar-col">
-          <h3 class="sidebar-text">Full Name</h3>
-          <h5 class="sidebar-text">Email</h5>
-          <h5 class="sidebar-text">Mac</h5>
-          <p class="sidebar-text">
-            Something about the user.
-            Like I am a web developer with interest in this and that
-          </p>
+          <h3 class="sidebar-text"><%= user.username %></h3>
+          <h5 class="sidebar-text"><%= user.email %></h5>
         </div>
       </div>
-
       <div class="span9 offset5">
         <br>
         <table class="table table-bordered table-hover">
@@ -58,46 +53,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>
-                qw-13-e3-r4-fr-3e
-              </th>
-              <th>
-                WiFi
-              </th>
-            </tr>
-            <tr>
-              <th>
-                4d-5w-rr-4r-ff-d5
-              </th>
-              <th>
-                LAN
-              </th>
-            </tr>
-            <tr>
-              <th>
-                2x-a9-dd-2s-2c-x9
-              </th>
-              <th>
-                WiFi
-              </th>
-            </tr>
-            <tr>
-              <th>
-                2w-5w-rr-ar-ff-d5
-              </th>
-              <th>
-                LAN
-              </th>
-            </tr>
-            <tr>
-              <th>
-                2w-q1-2e-3r-r4-4t
-              </th>
-              <th>
-                LAN
-              </th>
-            </tr>
+            <% for (var i=0; i<macs.length; i++) { %>
+              <tr><th><%= macs[i].mac %></th>
+              <th><%= macs[i].type %></th></tr>
+            <% } %>
           </tbody>
         </table>
 

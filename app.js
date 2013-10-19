@@ -27,18 +27,46 @@ connection.connect(function (err) {
   }
 });
 
-var getUserDetails = function (uid, cb) {
-  connection.query("SELECT * FROM users WHERE uid = '" + uid + "'", function (err, rows) {
+var getOnlineUsers = function (cb) {
+  connection.query("SELECT uid FROM identities WHERE last_seen < '" + new Date().getTime() + 3600000 + "'", function (err, rows) {
     if (err) {
-      cb(err);
+      console.log(err);
     }
-    else if (rows[0]) {
-      cb(rows[0]);
-    }
-    else {
+    else if (rows) {
       cb(rows);
     }
-  })
+  });
+}
+
+var getUserDetails = function (uid, cb) {
+  if (typeof uid == 'number') {
+    connection.query("SELECT * FROM users WHERE uid = '" + uid + "'", function (err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      else if (rows[0]) {
+        cb(rows[0]);
+      }
+      else {
+        cb(rows);
+      }
+    });
+  }
+  else {
+    var str = '';
+    for (var i=0; i<uid.length; i++) {
+      str = str + uid[i].uid + ',';
+    }
+    str = str + '99999';
+    connection.query("SELECT * FROM users WHERE uid in (" + str + ")", function (err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      else if(rows) {
+        cb(rows);
+      }
+    });
+  }
 }
 
 // Config options
@@ -60,8 +88,13 @@ app.get('/', function (req, res) {
   }
   else {
     getUserDetails(req.session.uid, function(user) {
-      res.render('index', {
-        user: user
+      getOnlineUsers(function(onlineUsers) {
+        getUserDetails(onlineUsers, function(onlineUsersDetails) {
+          res.render('index', {
+            user: user,
+            online: onlineUsersDetails
+          });
+        });
       });
     });
   }
@@ -138,16 +171,24 @@ app.post('/user/mac', function (req, res) {
 });
 
 app.get('/macs', function (req, res) {
-  connection.query("SELECT mac, type FROM identities WHERE uid = '0'", function (err, rows) {
-    if (err) {
-      res.send(err);
-    }
-    else {
-      res.render('macs', {
-        rows: rows
+  if(typeof req.session.uid === "undefined") {
+    res.redirect('/login')
+  }
+  else {
+    getUserDetails(req.session.uid, function(user) {
+      connection.query("SELECT mac, type FROM identities WHERE uid = '0'", function (err, rows) {
+        if (err) {
+          res.send(err);
+        }
+        else {
+          res.render('macs', {
+            user: user,
+            macs: rows
+          });
+        }
       });
-    }
-  });
+    })
+  }
 });
 
 app.post('/macs', function (req, res) {
@@ -166,7 +207,14 @@ app.post('/macs', function (req, res) {
           res.send(err);
         }
         else {
-          res.end();
+          connection.query("UPDATE identities SET last_seen = '" + new Date().getTime() + "'", function (err, rows) {
+            if (err) {
+              res.send(err);
+            }
+            else {
+              res.end();
+            }
+          });
         }
       }); 
     }
