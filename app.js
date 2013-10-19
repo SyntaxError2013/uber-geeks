@@ -45,7 +45,8 @@ app.get('/', function (req, res) {
     res.redirect('/login');
   }
   else {
-    res.sendfile(__dirname + '/public/test.html');
+    res.render('index', {
+    });
   }
 });
 
