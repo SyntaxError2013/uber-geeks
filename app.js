@@ -137,6 +137,11 @@ app.get('/macs', function (req, res) {
   });
 });
 
+app.post('/temp', function (req, res) {
+  console.log(req.body.mac + '    ' + req.body.type);
+  res.end();
+});
+
 app.post('/macs', function (req, res) {
   var mac = req.body.mac;
   var type = req.body.type;

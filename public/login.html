@@ -54,13 +54,24 @@
   </head>
 
   <body>
-
-    <div class="container">
-
-      <div id="head" class="header">
-        <span id="class">DogByte</span>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand-change brand" href="/">DogByte</a>
+          <div class="pull-right nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="/login">Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-
+    </div>
+    <div class="container">
       <form action="/login" method="post" class="form-signin" style="float:left">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input name="username" type="text" class="input-block-level" placeholder="Username">
