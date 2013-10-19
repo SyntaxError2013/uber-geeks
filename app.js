@@ -89,5 +89,66 @@ app.post('/users', function(req, res) {
   }
 });
 
+app.post('/user/mac', function (req, res) {
+  if (typeof req.session.uid === "undefined") {
+    res.redirect('/login');
+  }
+  else {
+    var mac = req.body.mac;
+    connection.query("UPDATE identities SET uid = '" + req.session.uid + "' WHERE mac = '" + mac + "'", function (err, rows) {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.redirect('/')
+      }
+    });
+  }
+});
+
+app.get('/macs', function (req, res) {
+  connection.query("SELECT mac, type FROM identities WHERE uid = '0'", function (err, rows) {
+    if (err) {
+      res.send(err);
+    }
+    else if (rows[0]) {
+      res.render({
+        rows: rows
+      });
+    }
+    else {
+      res.send("No unknown devices");
+    }
+  });
+});
+
+app.post('/macs', function (req, res) {
+  var mac = req.body.mac;
+  var type = req.body.type;
+  connection.query("SELECT * FROM identities WHERE mac = '" + mac + "'", function (err, rows) {
+    if (err) {
+      res.send(err);
+    }
+    else if(rows[0]) {
+      res.end();
+    }
+    else {
+      connection.query("INSERT INTO identities(uid, mac, type) VALUES ('" + 0 + "', '" + mac + "', '" + type + "'", function (err, rows) {
+        if (err) {
+          res.send(err);
+        }
+        else {
+          res.end();
+        }
+      }); 
+    }
+  });
+});
+
+app.all('*', function (req, res) {
+  res.writeHead(404);
+  res.end("Page not found!");
+});
+
 // Start the server
 server.listen(3000);
