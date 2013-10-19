@@ -1,3 +1,7 @@
+body
+{
+	font-family: "Alegreya", Georgia, Cambria, "Times New Roman", Times, serif;
+}
 .brand-change
 {
 	float: left !important; 
@@ -18,7 +22,7 @@
 }
 .sidebar-image
 {
-	margin: 40px 10px 0px 20px;
+	margin: 40px 10px 0px 40px;
 }
 .sidebar-custom
 {
@@ -32,15 +36,19 @@
 }
 h3.sidebar-text,h5.sidebar-text
 {
-	font-family: "Alegreya", Georgia, Cambria, "Times New Roman", Times, serif;
+	
 	text-align: center;
 }
 p.sidebar-text
 {
+	margin-left: 15px;
 	text-align: center;
 }
-
-.space-img
+.correct-width
 {
-	height: 20px;
+	width:1300px;
+}
+.space-extra
+{
+	height: 30px;
 }
