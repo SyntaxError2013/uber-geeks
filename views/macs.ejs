@@ -54,14 +54,23 @@
           </thead>
           <tbody>
             <% for (var i=0; i<macs.length; i++) { %>
-              <tr><td><%= macs[i].mac %></td>
+              <tr class='mac'><td><%= macs[i].mac %></td>
               <td><%= macs[i].type %></td></tr>
             <% } %>
           </tbody>
         </table>
 
       </div>
-
+        <script>
+          $('.mac').on('click', function () {
+            var macAddress = $(this).children().first().html();
+            $.ajax({
+              url: "/user/mac", type: "POST", data: 'mac=' + macAddress, success: function (data) {
+                console.log(data);
+              }
+            });
+          });
+        </script>
     </div>
 	</body>
 </html>

@@ -164,7 +164,7 @@ app.post('/user/mac', function (req, res) {
         res.send(err);
       }
       else {
-        res.redirect('/')
+        res.send("Done!");
       }
     });
   }
