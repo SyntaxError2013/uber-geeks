@@ -4,6 +4,8 @@ var websocket = require('socket.io');
 var http = require('http');
 var ejs = require('ejs');
 var mysql = require('mysql');
+var dl = require('delivery');
+var fs = require('fs');
 var config = require('./config/config.js');
 
 // Make instances of express and websockets
@@ -39,10 +41,12 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  if (typeof req.session.uid === "undefined")
+  if (typeof req.session.uid === "undefined") {
     res.redirect('/login');
-  else
-    res.send('Hello World!');
+  }
+  else {
+    res.sendfile(__dirname + '/public/test.html');
+  }
 });
 
 app.get('/bootstrap/:file', function (req, res) {
@@ -80,7 +84,6 @@ app.post('/login', function (req, res) {
 });
 
 app.post('/user', function (req, res) {
-  console.log (req.body);
   if (req.body.password != req.body.cpassword) {
     res.send("Passwords do not match!");
   }
@@ -126,13 +129,10 @@ app.get('/macs', function (req, res) {
     if (err) {
       res.send(err);
     }
-    else if (rows[0]) {
+    else {
       res.render('macs', {
         rows: rows
       });
-    }
-    else {
-      res.send("No unknown devices");
     }
   });
 });
@@ -204,6 +204,20 @@ app.get('/user/:id', function (req, res) {
       }
     });
   }
+});
+
+io.sockets.on('connection', function (socket) {
+  var delivery = dl.listen(socket);
+  delivery.on('receive.success', function (file) {
+    fs.writeFile(file.name, file.buffer, function (err) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log('File Saved');
+      }
+    });
+  });
 });
 
 app.all('*', function (req, res) {
