@@ -22,7 +22,7 @@ body
 }
 .sidebar-image
 {
-	margin: 40px 10px 0px 40px;
+	margin: 40px 10px 0px 50px;
 }
 .sidebar-custom
 {
@@ -51,4 +51,8 @@ p.sidebar-text
 .space-extra
 {
 	height: 30px;
+}
+.other-username
+{
+	text-align: center;
 }
