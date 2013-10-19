@@ -37,7 +37,7 @@ app.use(app.router);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   if(typeof req.session.uid === "undefined")
     res.redirect('/login');
   else
@@ -48,7 +48,7 @@ app.get('/login', function(req, res) {
   res.sendfile(__dirname + '/public/login.html');
 });
 
-app.post('/login', function(req, res) {
+app.post('/login', function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
   connection.query("SELECT uid, password FROM users WHERE username = '" + username + "'", function (err, rows) {
@@ -65,7 +65,7 @@ app.post('/login', function(req, res) {
   });
 });
 
-app.post('/users', function(req, res) {
+app.post('/users', function (req, res) {
   if (req.body.password != req.body.cpassword) {
     res.send("Passwords do not match!");
   }
@@ -143,6 +143,42 @@ app.post('/macs', function (req, res) {
       }); 
     }
   });
+});
+
+app.get('/user/:id', function (req, res) {
+  if (typeof req.session.uid === "undefined") {
+    res.redirect('/');
+  }
+  else {
+    var id = req.params.id;
+    connection.query("SELECT * FROM users WHERE uid = '" + id + '"', function (err, rows) {
+      if (err) {
+        res.send(err);
+      }
+      else if (rows[0]) {
+        var user_details = rows[0];
+        connection.query("SELECT * FROM files WHERE uid = '" + id + '"', function (err, rows) {
+          if (id == req.session.uid) {
+            res.render('user', {
+              details: user_details,
+              files: rows,
+              self: true
+            });
+          }
+          else {
+            res.render('user', {
+              details: user_details,
+              files: rows,
+              self: false
+            });
+          }
+        });
+      }
+      else {
+        res.send("No such user!");
+      }
+    });
+  }
 });
 
 app.all('*', function (req, res) {
