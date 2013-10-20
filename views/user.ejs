@@ -69,11 +69,15 @@
                 <% } else { %>
                   <i class="icon-file"></i>
                 <% } %>
-              <%= files[i].filename %></td>
+              <% if(!self) { %>
+                <a href="/file/<%= files[i].fid %>" download="<%= files[i].filename %>"><%= files[i].filename %>
+              <% } %></td>
             <% } %>
           </tbody>
         </table>
+        <% if(self){ %>
         <form action="/file" class="dropzone"></form>
+        <% } %>
       </div>
     </div>
 	</body>

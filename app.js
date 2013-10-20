@@ -6,6 +6,7 @@ var ejs = require('ejs');
 var mysql = require('mysql');
 var dl = require('delivery');
 var fs = require('fs');
+var url = require('url');
 var config = require('./config/config.js');
 
 // Make instances of express and websockets
@@ -28,7 +29,7 @@ connection.connect(function (err) {
 });
 
 var getOnlineUsers = function (cb) {
-  connection.query("SELECT DISTINCT uid FROM identities WHERE last_seen < '" + new Date().getTime() + 3600000 + "'", function (err, rows) {
+  connection.query("SELECT DISTINCT uid FROM identities WHERE '" + new Date().getTime() + "' < last_seen + 3600000 ", function (err, rows) {
     if (err) {
       console.log(err);
     }
@@ -151,6 +152,14 @@ app.post('/user', function (req, res) {
             res.send(err);
           }
           else {
+            fs.mkdir(__dirname + '/public/uploads/' + rows[0].uid, 0777, function (err) {
+              if (err) {
+                console.log(err);
+              }
+              else {
+                console.log("Directory Created!");
+              }
+            });
             req.session.uid = rows[0].uid;
             res.redirect('/');
           }
@@ -206,7 +215,14 @@ app.post('/macs', function (req, res) {
       res.send(err);
     }
     else if(rows[0]) {
-      res.end();
+      connection.query("UPDATE identities SET last_seen = " + new Date().getTime() + " WHERE mac = '" + mac + "'", function (err, rows) {
+        if (err) {
+          res.send(err);
+        }
+        else {
+          res.end();
+        }
+      });
     }
     else {
       connection.query("INSERT INTO identities(uid, mac, type) VALUES ('" + 0 + "', '" + mac + "', '" + type + "')", function (err, rows) {
@@ -214,7 +230,7 @@ app.post('/macs', function (req, res) {
           res.send(err);
         }
         else {
-          connection.query("UPDATE identities SET last_seen = '" + new Date().getTime() + "'", function (err, rows) {
+          connection.query("UPDATE identities SET last_seen = " + new Date().getTime() + " WHERE mac = '" + mac + "'", function (err, rows) {
             if (err) {
               res.send(err);
             }
@@ -275,7 +291,7 @@ app.post('/file', function (req, res) {
   }
   else {
     fs.readFile(req.files.file.path, function (err, data) {
-      var newPath = __dirname + "/public/uploads/" + req.files.file.name;
+      var newPath = __dirname + "/public/uploads/" + req.session.uid + '/' + req.files.file.name;
       fs.writeFile(newPath, data, function (err) {
         connection.query("INSERT INTO files(uid, filename, relative_link, type, uploaded_at) VALUES ('" + req.session.uid + "', '" + req.files.file.name + "', '/', '" + req.files.file.type + "', '" + new Date().getTime() + "')", function (err, rows) {
           if (err) {
@@ -291,19 +307,46 @@ app.post('/file', function (req, res) {
   }
 });
 
-io.sockets.on('connection', function (socket) {
-  var delivery = dl.listen(socket);
-  delivery.on('receive.success', function (file) {
-    fs.writeFile(file.name, file.buffer, function (err) {
+app.get('/file/:id', function (req, res) {
+  if (typeof req.session.uid === "undefined") {
+    res.redirect('/login');
+  }
+  else {
+    connection.query("SELECT * FROM files WHERE fid = '" + req.params.id + "'", function (err, rows) {
       if (err) {
-        console.log(err);
+        res.send(err);
       }
       else {
-        console.log('File Saved');
+        var uid = rows[0].uid;
+        var file = __dirname + '/public/uploads/' + uid + '/' + rows[0].filename;
+        fs.exists(file, function(exists) {
+          if (exists) {
+            res.sendfile(file);
+          }
+          else {
+            res.send("File does not exist!");
+          }
+        });   
       }
     });
-  });
+  }
 });
+
+// io.sockets.on('connection', function(socket){
+//   var delivery = dl.listen(socket);
+//   delivery.on('delivery.connect',function(delivery){
+
+//     delivery.send({
+//       name: 'somefile',
+//       path : './public/uploads/1/SubjectRegistration.pdf'
+//     });
+
+//     delivery.on('send.success',function(file){
+//       console.log('File successfully sent to client!');
+//     });
+
+//   });
+// });
 
 app.all('*', function (req, res) {
   res.writeHead(404);
