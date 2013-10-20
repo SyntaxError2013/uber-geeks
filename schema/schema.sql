@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 19, 2013 at 05:11 PM
+-- Generation Time: Oct 20, 2013 at 04:52 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.5.4-1+debphp.org~precise+1
 
@@ -31,11 +31,10 @@ CREATE TABLE IF NOT EXISTS `files` (
   `uid` int(11) NOT NULL,
   `filename` text NOT NULL,
   `relative_link` text NOT NULL,
-  `absolute_link` text NOT NULL,
   `type` varchar(50) NOT NULL,
-  `uploaded_at` date NOT NULL,
+  `uploaded_at` int(50) NOT NULL,
   PRIMARY KEY (`fid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -47,9 +46,11 @@ CREATE TABLE IF NOT EXISTS `identities` (
   `devid` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `mac` varchar(50) NOT NULL,
-  `label` varchar(50) NOT NULL,
+  `label` varchar(50) DEFAULT NULL,
+  `type` varchar(50) NOT NULL,
+  `last_seen` int(50) NOT NULL,
   PRIMARY KEY (`devid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
 
 -- --------------------------------------------------------
 
@@ -63,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
