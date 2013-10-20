@@ -55,7 +55,7 @@
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="identify">
             <% for(var i=0; i<files.length; i++) { %>
               <tr><td>
                 <% if(files[i].type.indexOf("image")!=-1) { %>
@@ -70,13 +70,13 @@
                   <i class="icon-file"></i>
                 <% } %>
               <% if(!self) { %>
-                <a href="/file/<%= files[i].fid %>" download="<%= files[i].filename %>"><%= files[i].filename %>
-              <% } %></td>
+                <a href="/file/<%= files[i].fid %>" download="<%= files[i].filename %>">
+              <% } %><%= files[i].filename %></td>
             <% } %>
           </tbody>
         </table>
         <% if(self){ %>
-        <form action="/file" class="dropzone"></form>
+        <form action="/file" class="dropzone" id="hello"></form>
         <% } %>
       </div>
     </div>
