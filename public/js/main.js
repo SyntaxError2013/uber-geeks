@@ -1,28 +1,20 @@
-var downloadURL = function downloadURL(url) {
-  var hiddenIFrameID = 'hiddenDownloader',
-    iframe = document.getElementById(hiddenIFrameID);
-  if (iframe === null) {
-    iframe = document.createElement('iframe');
-    iframe.id = hiddenIFrameID;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-  }
-  iframe.src = url;
-};
-
-$(function(){
-  var socket = io.connect('/');
-
-  socket.on('connect', function(){
-    var delivery = new Delivery(socket);
-
-    delivery.on('receive.start',function(fileUID){
-      console.log('receiving a file!');
-    });
-
-    delivery.on('receive.success',function(file){
-      console.log(file);
-      downloadURL(file.dataURL());
-    });
-  });
+var socket = io.connect("/");
+socket.on('hello', function (data) {
+  console.log(data);
+});
+$('.filetr').on('click', function () {
+  $(this).addClass('active');
+  var id = $(this).attr("fid");
+  $('#broadcast').show();
+  $('#broadcast').attr('fid', id);
+});
+$('#broadcast').on('click', function () {
+  var file = $(this).attr("fid");
+  console.log(file);
+  socket.emit('broadcast', {fileid: file});
+});
+socket.on('newfile', function (data) {
+  var file = data.filedata[0];
+  $('.notification').html('User ' + data.username.username + ' sent you the file <a href="/file/' + file.fid + '">' + file.filename + '</a>') ;
+  $('.notification').append('<br><a href="/file/' + file.fid + '" download="' + file.filename + '">' + file.filename + '<div id="downloader" class="btn">Click Here</div></a> to Download');
 });

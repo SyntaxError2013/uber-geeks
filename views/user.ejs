@@ -14,6 +14,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/delivery.js"></script>
     <script src="/js/dropzone.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -57,7 +58,7 @@
           </thead>
           <tbody id="identify">
             <% for(var i=0; i<files.length; i++) { %>
-              <tr><td>
+              <tr class="filetr" fid="<%= files[i].fid %>"><td>
                 <% if(files[i].type.indexOf("image")!=-1) { %>
                   <i class="icon-glass"></i>
                 <% } else if(files[i].type.indexOf("pdf")!=-1) { %>
@@ -76,9 +77,12 @@
           </tbody>
         </table>
         <% if(self){ %>
+          <div class="btn btn-primary" id="broadcast" style="display:none">Broadcast</div>
         <form action="/file" class="dropzone" id="hello"></form>
         <% } %>
       </div>
     </div>
+    <div class=" span4 notification"></div>
+    <script src="/js/main.js"></script>
 	</body>
 </html>

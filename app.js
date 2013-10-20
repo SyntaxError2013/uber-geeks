@@ -332,21 +332,17 @@ app.get('/file/:id', function (req, res) {
   }
 });
 
-// io.sockets.on('connection', function(socket){
-//   var delivery = dl.listen(socket);
-//   delivery.on('delivery.connect',function(delivery){
-
-//     delivery.send({
-//       name: 'somefile',
-//       path : './public/uploads/1/SubjectRegistration.pdf'
-//     });
-
-//     delivery.on('send.success',function(file){
-//       console.log('File successfully sent to client!');
-//     });
-
-//   });
-// });
+io.sockets.on('connection', function (socket) {
+  socket.emit('hello', {msg: "Hello World!1"});  
+  socket.on('broadcast', function(data) {
+    connection.query("SELECT * FROM files WHERE fid = '" + data.fileid + "'", function (err, rows) {
+      var filedata = rows;
+      connection.query("SELECT username FROM users WHERE uid = '" + rows[0].uid + "'", function (err, rows) {
+        io.sockets.emit('newfile', {filedata: filedata, username: rows[0]});
+      });
+    });
+  });
+});
 
 app.all('*', function (req, res) {
   res.writeHead(404);
