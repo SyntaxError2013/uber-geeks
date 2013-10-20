@@ -100,6 +100,13 @@ app.get('/', function (req, res) {
   }
 });
 
+app.get('/test', function (req, res) {
+  if(typeof req.session.uid === "undefined")
+    res.redirect('/login')
+  else
+    res.sendfile(__dirname + '/public/test.html');
+});
+
 app.get('/login', function (req, res) {
   if (typeof req.session.uid === "undefined")
     res.sendfile(__dirname + '/public/login.html');
@@ -259,6 +266,28 @@ app.get('/user/:id', function (req, res) {
         res.send("No such user!");
       }
     });
+  }
+});
+
+app.post('/file', function (req, res) {
+  if (typeof req.session.uid === "undefined") {
+    res.redirect('/login');
+  }
+  else {
+    fs.readFile(req.files.file.path, function (err, data) {
+      var newPath = __dirname + "/public/uploads/" + req.files.file.name;
+      fs.writeFile(newPath, data, function (err) {
+        connection.query("INSERT INTO files(uid, filename, relative_link, type, uploaded_at) VALUES ('" + req.session.uid + "', '" + req.files.file.name + "', '/', '" + req.files.file.type + "', '" + new Date().getTime() + "')", function (err, rows) {
+          if (err) {
+            response.send(err);
+          }
+          else {
+            response.end();
+          }
+        });
+      });
+    });
+    res.end();
   }
 });
 

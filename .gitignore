@@ -1,2 +1,4 @@
 config/config.js
 public/img/uploads/*
+public/uploads/*
+public/test.html
