@@ -65,3 +65,9 @@ p.sidebar-text
 {
 	text-align: center;
 }
+.download
+{
+	height: 300px;
+	border: 1px solid #000;
+	border-radius: 2px 2px 2px 2px; 
+}
