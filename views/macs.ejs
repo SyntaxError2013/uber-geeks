@@ -22,7 +22,11 @@
           </button>
           <a class="brand-change brand" href="/">DogByte</a>
           <div class="pull-right nav-collapse collapse">
-            <ul class="nav">
+            <ul class="nav"><li>
+                              <form method="GET" id="searchform" action="/search">
+                <input type="text" id="q" name="q" class="search" style="position:relative;top:12px" placeholder="Search Here">
+              </form>
+              </li>
               <li>
                 <a href="/logout">Logout</a>
               </li>
@@ -72,7 +76,7 @@
           });
         </script>
     </div>
-    <div class="notification"></div>
+    <div class="notification" style="display:none"></div>
     <script src="/js/main.js"></script>
 	</body>
 </html>

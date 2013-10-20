@@ -15,6 +15,12 @@ $('#broadcast').on('click', function () {
 });
 socket.on('newfile', function (data) {
   var file = data.filedata[0];
+  $('.notification').show();
   $('.notification').html('User ' + data.username.username + ' sent you the file <a href="/file/' + file.fid + '">' + file.filename + '</a>') ;
-  $('.notification').append('<br><a href="/file/' + file.fid + '" download="' + file.filename + '">' + file.filename + '<div id="downloader" class="btn">Click Here</div></a> to Download');
+});
+$(document).on('keyup', function (e) {
+  var key = e.which;
+  if(key==13 && $('#q').val()!='') {
+    $('#searchform').submit();
+  }
 });

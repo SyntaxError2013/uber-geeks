@@ -333,9 +333,12 @@ app.get('/file/:id', function (req, res) {
 
 app.get('/search', function(req, res) {
   var q = req.query.q;
-  connection.query("SELECT * FROM files WHERE filename LIKE '%" + q + "%'", function (err, rows) {
-    res.render('search', {
-      files: rows
+  getUserDetails(req.session.uid, function (user) {
+    connection.query("SELECT * FROM files WHERE filename LIKE '%" + q + "%'", function (err, rows) {
+      res.render('search', {
+        user: user,
+        files: rows
+      });
     });
   });
 });

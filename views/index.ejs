@@ -17,12 +17,18 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          </form>
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
           </button>
           <a class="brand-change brand" href="/">DogByte</a>
           <div class="pull-right nav-collapse collapse">
             <ul class="nav">
+                            <li>
+                              <form method="GET" id="searchform" action="/search">
+                <input type="text" id="q" name="q" class="search" style="position:relative;top:12px" placeholder="Search Here">
+              </form>
+              </li>
               <li>
                 <a href="/logout">Logout</a>
               </li>
@@ -74,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div class="notification"></div>
+    <div class="notification" style="display:none"></div>
     <script src="/js/main.js"></script>
 	</body>
 </html>
