@@ -331,6 +331,15 @@ app.get('/file/:id', function (req, res) {
   }
 });
 
+app.get('/search', function(req, res) {
+  var q = req.query.q;
+  connection.query("SELECT * FROM files WHERE filename LIKE '%" + q + "%'", function (err, rows) {
+    res.render('search', {
+      files: rows
+    });
+  });
+});
+
 io.sockets.on('connection', function (socket) {
   socket.emit('hello', {msg: "Hello World!1"});  
   socket.on('broadcast', function(data) {
