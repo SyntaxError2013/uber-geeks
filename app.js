@@ -4,7 +4,6 @@ var websocket = require('socket.io');
 var http = require('http');
 var ejs = require('ejs');
 var mysql = require('mysql');
-var dl = require('delivery');
 var fs = require('fs');
 var url = require('url');
 var config = require('./config/config.js');
