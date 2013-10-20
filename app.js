@@ -240,7 +240,7 @@ app.get('/user/:id', function (req, res) {
       }
       else if (rows[0]) {
         var user = rows[0];
-        connection.query("SELECT `files`.*, `identities`.* FROM `files`, `identities` WHERE `files`.uid = '" + id + "' AND `identities`.`uid` = '" + id + "'", function (err, rows) {
+        connection.query("SELECT * FROM files WHERE uid = '" + id + "'", function (err, rows) {
           if (err) {
             res.send(err);
           }
@@ -279,10 +279,10 @@ app.post('/file', function (req, res) {
       fs.writeFile(newPath, data, function (err) {
         connection.query("INSERT INTO files(uid, filename, relative_link, type, uploaded_at) VALUES ('" + req.session.uid + "', '" + req.files.file.name + "', '/', '" + req.files.file.type + "', '" + new Date().getTime() + "')", function (err, rows) {
           if (err) {
-            response.send(err);
+            res.send(err);
           }
           else {
-            response.end();
+            res.end();
           }
         });
       });

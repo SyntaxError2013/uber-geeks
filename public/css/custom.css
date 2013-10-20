@@ -2,15 +2,19 @@ body
 {
 	font-family: "Alegreya", Georgia, Cambria, "Times New Roman", Times, serif;
 }
+.hidden
+{
+	display: none;
+}
 .brand-change
 {
 	float: left !important; 
 	color: #999999 !important;
 }
 .circle {
-	height: 180px;
-	width: 180px;
-	border-radius: 95px;
+	height: 140px;
+	width: 140px;
+	border-radius: 70px;
 }
 .brand-change:hover
 {
@@ -27,7 +31,7 @@ body
 }
 .sidebar-image
 {
-	margin: 40px 10px 0px 30px;
+	margin: 40px 10px 0px 60px;
 }
 .sidebar-custom
 {

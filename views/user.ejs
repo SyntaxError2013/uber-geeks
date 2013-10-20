@@ -10,8 +10,10 @@
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/docs.css" rel="stylesheet">
     <link href="/css/custom.css" rel="stylesheet">
+    <link href="/css/dropzone.css" rel="stylesheet">
     <script src="/js/jquery.min.js"></script>
     <script src="/js/delivery.js"></script>
+    <script src="/js/dropzone.js"></script>
 	</head>
 	<body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -42,39 +44,36 @@
 
       <div class="span9 offset5">
         <br>
-        <ul class="breadcrumb">
-          <li><a href="#">Messi</a> <span class="divider">/</span></li>
-          <li><a href="#">Games</a> <span class="divider">/</span></li>
-          <li><a href="#">FIFA's</a> <span class="divider">/</span></li>
-          <li class="active">FIFA</li>
+        <ul class="breadcrumb"><span class="divider">/</span></li>
         </ul>
 
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td>
-                File/Directory
-              </td>
+              <th>
+                Files
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>
-                Keeper.txt
-              </th>
-            </tr>
-            <tr>
-              <th>
-                Teams
-              </th>
-            </tr>
-            <tr>
-              <th>
-                Goal.txt
-              </th>
-            </tr>
+            <% for(var i=0; i<files.length; i++) { %>
+              <tr><td>
+                <% if(files[i].type.indexOf("image")!=-1) { %>
+                  <i class="icon-star"></i>
+                <% } else if(files[i].type.indexOf("pdf")!=-1) { %>
+                  <i class="icon-book"></i>
+                <% } else if(files[i].type.indexOf("audio")!=-1) { %>
+                  <i class="icon-music"></i>
+                <% } else if(files[i].type.indexOf("video")!=-1) { %>
+                  <i class="icon-film"></i>
+                <% } else { %>
+                  <i class="icon-file"></i>
+                <% } %>
+              <%= files[i].filename %></td>
+            <% } %>
           </tbody>
         </table>
+        <form action="/file" class="dropzone"></form>
       </div>
     </div>
 	</body>
