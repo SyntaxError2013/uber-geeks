@@ -1,0 +1,41 @@
+body{font-family: "Alegreya", Georgia, Cambria, "Times New Roman", Times, serif;}
+.brand-change {
+	float: left !important; 
+	color: #999999 !important;
+}
+.brand-change:hover{color: #FFF !important;}
+.container{width: 1300px;}
+.sidebar-col{margin: 40px 10px 20px 10px;}
+.sidebar-image{margin: 40px 10px 0px 60px;}
+.sidebar-custom {
+	margin: 0px;
+	padding: 0px;
+	background-color: #333;
+	width: 250px;
+	position: fixed;
+	height: 1000px;	
+	color: white;
+}
+h3.sidebar-text,h5.sidebar-text{text-align: center;}
+p.sidebar-text {
+	margin-left: 15px;
+	text-align: center;
+}
+.correct-width{width:1300px;}
+.space-extra{height: 30px;}
+.other-username{text-align: center;}
+.notification-bar{
+	border: 1px solid black;
+	background-color: #999;
+	float: right;
+	margin: 20px 10px 0 0;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 20px #999;
+	height: 5%;
+	width: 20%;
+	z-index: 999;
+	text-align:center;
+    font-weight:normal;
+    color:white;
+}
