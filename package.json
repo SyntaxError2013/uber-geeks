@@ -13,7 +13,6 @@
     "express": "*",
     "socket.io": "*",
     "ejs": "*",
-    "mysql": "*",
-    "delivery": "*"
+    "mysql": "*"
   }
 }
